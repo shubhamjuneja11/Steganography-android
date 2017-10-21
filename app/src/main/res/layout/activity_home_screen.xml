@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -13,7 +13,11 @@
         android:text="Encode"
         android:onClick="encode"
         tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="150dp" />
+        tools:layout_editor_absoluteY="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2"
+        android:layout_marginTop="76dp" />
 
     <Button
         android:id="@+id/button2"
@@ -22,5 +26,8 @@
         android:text="Decode"
         android:onClick="decode"
         tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="292dp" />
-</android.support.constraint.ConstraintLayout>
+        tools:layout_editor_absoluteY="292dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="177dp" />
+</RelativeLayout>
