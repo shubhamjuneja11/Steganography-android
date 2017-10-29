@@ -40,7 +40,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
 
     private int PICK_IMAGE_REQUEST = 1;
 
-    private String UPLOAD_URL =" http://192.168.0.105:5000/upload";
+    private String UPLOAD_URL =Urls.getURL()+"/upload";
 
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
@@ -58,7 +58,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
         //Showing the progress dialog
 
         final ProgressDialog loading = ProgressDialog.show(this,"Decoding...","Please wait...",false,false);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, " http://192.168.0.105:5000/decode",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Urls.getURL()+"/decode",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {

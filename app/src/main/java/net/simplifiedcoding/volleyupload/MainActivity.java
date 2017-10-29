@@ -52,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText editTextName;
 
     private Bitmap bitmap;
-
+    String mImageName;
     private int PICK_IMAGE_REQUEST = 1;
 
-    private String UPLOAD_URL =" http://192.168.0.105:5000/upload";
+    private String UPLOAD_URL =Urls.getURL()+"/upload";
 
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
@@ -188,61 +188,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             uploadImage();
         }
     }
-    private void SaveImage(byte[] bytes) {
-Log.e("fgf","1");
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/saved_images");
-        myDir.mkdirs();
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fname = "outputz-"+ n +".jpg";
-        File file = new File (myDir, fname);
-        Log.e("fgf",file.getAbsolutePath());
-        if (file.exists ())
-            file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            out.write(bytes);
-            out.close();
-            File f=new File(fname);
-            Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
-            imageView.setImageBitmap(myBitmap);
-            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-            Toast.makeText(MainActivity.this, "Image saved as output.jpg", Toast.LENGTH_SHORT).show();
-            finish();
 
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    private void save(byte [] bytes){
-        ContextWrapper cw = new ContextWrapper(getApplicationContext());
-        // path to /data/data/yourapp/app_data/imageDir
-        File directory = cw.getDir("imageDir", Context.MODE_PRIVATE);
-        // Create imageDir
-        File mypath=new File(directory,"profile.jpg");
-        Log.e("abc",mypath.getAbsolutePath());
-        //File file=new File(mypath);
-
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(mypath);
-            out.write(bytes);
-            out.close();
-            File f=new File(mypath.getAbsolutePath());
-            Bitmap myBitmap = BitmapFactory.decodeFile(f.getAbsolutePath());
-            imageView.setImageBitmap(myBitmap);
-            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
-            Toast.makeText(MainActivity.this, "Image saved as output.jpg", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-    }
     private void saveme(byte [] bytes){
         File f=getOutputMediaFile();
         if (f == null) {
@@ -254,7 +200,7 @@ Log.e("fgf","1");
             FileOutputStream fos = new FileOutputStream(f);
             fos.write(bytes);
             fos.close();
-            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "File saved as "+mImageName, Toast.LENGTH_SHORT).show();
 
         }
         catch (Exception e){
@@ -264,7 +210,7 @@ Log.e("fgf","1");
     private  File getOutputMediaFile(){
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
                 + "/Android/data/"
-                + getApplicationContext().getPackageName()
+                + "Steganograhy"
                 + "/Files");
         Log.e("abcd",mediaStorageDir.getAbsolutePath());
 
@@ -279,25 +225,12 @@ Log.e("fgf","1");
         // Create a media file name
         String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
         File mediaFile;
-        String mImageName="MI_"+ timeStamp +".jpg";
+         mImageName="MI_"+ timeStamp +".jpg";
+        //mImageName="output.jpg";
         mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
         Log.e("abc",mediaFile.getAbsolutePath());
         return mediaFile;
     }
-    private void tryme(byte [] bytes){
-        File mediaFile = new File(getExternalCacheDir(), "NewDirectory");
-        File file = new File(mediaFile, "xyz.jpg");
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bytes);
-            fos.close();
-            Toast.makeText(MainActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
 
 }
