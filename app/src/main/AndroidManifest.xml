@@ -13,12 +13,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"></activity>
-        <activity android:name=".HomeScreen">
-
+            android:label="Encode"
+           ></activity>
+        <activity android:name=".HomeScreen"
+            android:label="HomeScreen">
         </activity>
-        <activity android:name=".DecodeActivity" />
-        <activity android:name=".AdressActivity">
+        <activity android:name=".DecodeActivity"  android:label="Decode"/>
+        <activity android:name=".AdressActivity"  android:label="Steganography">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
