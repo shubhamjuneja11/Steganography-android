@@ -59,7 +59,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
     }
     public void decodemessage(){
         //Showing the progress dialog
-        Toast.makeText(DecodeActivity.this,imgtype, Toast.LENGTH_SHORT).show();
+       // Toast.makeText(DecodeActivity.this,imgtype, Toast.LENGTH_SHORT).show();
         final ProgressDialog loading = ProgressDialog.show(this,"Decoding...","Please wait...",false,false);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Urls.getURL()+"/decode",
                 new Response.Listener<String>() {

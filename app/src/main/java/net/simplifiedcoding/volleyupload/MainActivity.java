@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         try {
             String a[]= s.split("\\.");
             s=a[a.length-1];
-            Toast.makeText(this, imgtype, Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, imgtype, Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
             e.printStackTrace();
