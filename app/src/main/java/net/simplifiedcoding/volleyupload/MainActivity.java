@@ -140,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 params.put(KEY_IMAGE, image);
                 params.put(KEY_NAME, name);
                 params.put(IMAGE_TYPE,imgtype);
+                Log.e("abcde",imgtype);
                 params.put(PASS,password);
                 //returning parameters
                 return params;
@@ -171,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 type=getContentResolver().getType(filePath);
                 imageView.setImageBitmap(bitmap);
+                imgtype=queryName(filePath);
                // Toast.makeText(this, queryName(filePath), Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -195,8 +197,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
        String s=returnCursor.getString(nameIndex);
         returnCursor.close();
         try {
-            imgtype = s.split("\\.")[1];
-
+            String a[]= s.split("\\.");
+            s=a[a.length-1];
+            Toast.makeText(this, imgtype, Toast.LENGTH_SHORT).show();
         }
         catch (Exception e){
             e.printStackTrace();
