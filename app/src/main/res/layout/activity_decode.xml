@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choose Image"
+        android:background="#000000"
+        android:textColor="#ffffff"
         android:id="@+id/buttonChoose" />
 
 
@@ -19,6 +21,11 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:id="@+id/imageView" />
+    <EditText
+        android:id="@+id/password"
+        android:hint="Enter password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <TextView
@@ -33,6 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Decode Image"
+        android:background="#000000"
+        android:textColor="#ffffff"
         android:id="@+id/buttonUpload" />
 
 

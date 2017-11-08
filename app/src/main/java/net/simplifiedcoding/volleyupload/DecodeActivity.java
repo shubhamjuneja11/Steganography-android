@@ -2,9 +2,11 @@ package net.simplifiedcoding.volleyupload;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -31,7 +33,7 @@ import java.util.Map;
 public class DecodeActivity extends AppCompatActivity implements View.OnClickListener{
     private Button buttonChoose;
     private Button buttonUpload;
-
+    EditText editpass;
     private ImageView imageView;
 
     private TextView text;
@@ -39,12 +41,13 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
     private Bitmap bitmap;
 
     private int PICK_IMAGE_REQUEST = 1;
-
     private String UPLOAD_URL =Urls.getURL()+"/upload";
 
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
-    String type;
+    String IMAGE_TYPE="type";
+    String PASSWORD="password";
+    String imgtype;
     public String getStringImage(Bitmap bmp){
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -88,13 +91,15 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
             protected Map<String, String> getParams() throws AuthFailureError {
                 //Converting Bitmap to String
                 String image = getStringImage(bitmap);
-
+                String password=editpass.getText().toString();
 
                 //Creating parameters
                 Map<String,String> params = new Hashtable<String, String>();
 
                 //Adding parameters
                 params.put(KEY_IMAGE, image);
+                params.put(IMAGE_TYPE,imgtype);
+                params.put(PASSWORD,password);
                 //params.put(KEY_NAME, name);
 
                 //returning parameters
@@ -115,7 +120,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
 
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
-
+        editpass=(EditText)findViewById(R.id.password);
         text = (TextView) findViewById(R.id.text);
 
         imageView  = (ImageView) findViewById(R.id.imageView);
@@ -139,8 +144,8 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
             try {
                 //Getting the Bitmap from Gallery
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                type=getContentResolver().getType(filePath);
                 imageView.setImageBitmap(bitmap);
+                imgtype=queryName(filePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -148,6 +153,29 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
 
 
         }
+    }
+    private String queryName(Uri uri ) {
+
+        Cursor returnCursor =
+                getContentResolver().query(uri, null, null, null, null);
+    /*
+     * Get the column indexes of the data in the Cursor,
+     * move to the first row in the Cursor, get the data,
+     * and display it.
+     */
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+
+        String s=returnCursor.getString(nameIndex);
+        returnCursor.close();
+        try {
+            s = s.split("\\.")[1];
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return s;
     }
 
     @Override

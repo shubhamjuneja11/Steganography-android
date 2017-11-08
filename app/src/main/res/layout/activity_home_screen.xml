@@ -14,16 +14,20 @@
         android:onClick="encode"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="150dp"
-        android:layout_alignParentTop="true"
+        android:background="#000000"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/button2"
         android:layout_alignLeft="@+id/button2"
         android:layout_alignStart="@+id/button2"
-        android:layout_marginTop="76dp" />
+        android:layout_marginBottom="109dp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Decode"
+        android:background="#000000"
+        android:textColor="#ffffff"
         android:onClick="decode"
         tools:layout_editor_absoluteX="158dp"
         tools:layout_editor_absoluteY="292dp"

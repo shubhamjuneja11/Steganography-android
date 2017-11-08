@@ -1,6 +1,7 @@
 package net.simplifiedcoding.volleyupload;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
@@ -10,6 +11,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
@@ -35,6 +37,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private ImageView imageView;
 
-    private EditText editTextName;
+    private EditText editTextName,editpass;
 
     private Bitmap bitmap;
     String mImageName;
@@ -59,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
-    String type;
+    private String IMAGE_TYPE="type",PASS="password";
+    String type,imgtype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
 
         editTextName = (EditText) findViewById(R.id.editText);
-
+        editpass=(EditText)findViewById(R.id.password);
         imageView  = (ImageView) findViewById(R.id.imageView);
 
         buttonChoose.setOnClickListener(this);
@@ -100,8 +104,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         //Showing toast message of the response
                         byte[] imageBytes=Base64.decode(s,0);
                        Log.e("abc","2");
-
-
                             saveme(imageBytes);
 
 
@@ -130,14 +132,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Getting Image Name
                 String name = editTextName.getText().toString().trim();
-
+                String password=editpass.getText().toString().trim();
                 //Creating parameters
-                Map<String,String> params = new Hashtable<String, String>();
+                Map<String,String> params = new Hashtable<>();
 
                 //Adding parameters
                 params.put(KEY_IMAGE, image);
                 params.put(KEY_NAME, name);
-
+                params.put(IMAGE_TYPE,imgtype);
+                params.put(PASS,password);
                 //returning parameters
                 return params;
             }
@@ -168,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 type=getContentResolver().getType(filePath);
                 imageView.setImageBitmap(bitmap);
+               // Toast.makeText(this, queryName(filePath), Toast.LENGTH_SHORT).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -175,6 +179,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         }
+    }
+    private String queryName(Uri uri ) {
+
+        Cursor returnCursor =
+                getContentResolver().query(uri, null, null, null, null);
+    /*
+     * Get the column indexes of the data in the Cursor,
+     * move to the first row in the Cursor, get the data,
+     * and display it.
+     */
+        int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+        returnCursor.moveToFirst();
+
+       String s=returnCursor.getString(nameIndex);
+        returnCursor.close();
+        try {
+            imgtype = s.split("\\.")[1];
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return s;
     }
 
     @Override
@@ -212,7 +239,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 + "/Android/data/"
                 + "Steganograhy"
                 + "/Files");
-        Log.e("abcd",mediaStorageDir.getAbsolutePath());
 
         if (! mediaStorageDir.exists()){
             if (! mediaStorageDir.mkdirs()){

@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Choose Image"
+        android:background="#000000"
+        android:textColor="#ffffff"
         android:id="@+id/buttonChoose" />
 
 
@@ -26,11 +28,18 @@
         android:hint="Enter Message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <EditText
+        android:id="@+id/password"
+        android:hint="Enter password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Upload Image"
+        android:background="#000000"
+        android:textColor="#ffffff"
         android:id="@+id/buttonUpload" />
 
 
