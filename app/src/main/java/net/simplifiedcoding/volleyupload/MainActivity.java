@@ -252,7 +252,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private  File getOutputMediaFile(){
         File mediaStorageDir = new File(Environment.getExternalStorageDirectory()
                 + "/Android/data/"
-                + "Steganograhy"
+                + "AASteganograhy"
                 + "/Files");
 
         if (! mediaStorageDir.exists()){
