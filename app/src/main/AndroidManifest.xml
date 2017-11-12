@@ -17,14 +17,15 @@
            ></activity>
         <activity android:name=".HomeScreen"
             android:label="HomeScreen">
-        </activity>
-        <activity android:name=".DecodeActivity"  android:label="Decode"/>
-        <activity android:name=".AdressActivity"  android:label="Steganography">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".DecodeActivity"  android:label="Decode"/>
+        <activity android:name=".AdressActivity"  android:label="Steganography">
+
         </activity>
     </application>
 

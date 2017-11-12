@@ -32,6 +32,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -98,13 +102,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                        Log.e("abc","1");
+                        Log.e("abcde",s);
+                        try {
+                            JSONObject object=new JSONObject(s);
+                            byte[] imageBytes=Base64.decode(object.getString("image"),0);
+                            mImageName=object.getString("name");
+                            saveme(imageBytes,mImageName);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
                         //Disimissing the progress dialog
                         loading.dismiss();
                         //Showing toast message of the response
-                        byte[] imageBytes=Base64.decode(s,0);
+                        //byte[] imageBytes=Base64.decode(s,0);
                        Log.e("abc","2");
-                            saveme(imageBytes);
+                           // saveme(imageBytes);
 
 
 
@@ -138,10 +152,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 //Adding parameters
                 params.put(KEY_IMAGE, image);
-                params.put(KEY_NAME, name);
-                params.put(IMAGE_TYPE,imgtype);
-                Log.e("abcde",imgtype);
                 params.put(PASS,password);
+                params.put(KEY_NAME,name);
                 //returning parameters
                 return params;
             }
@@ -219,7 +231,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void saveme(byte [] bytes){
+    private void saveme(byte [] bytes,String name){
         File f=getOutputMediaFile();
         if (f == null) {
             Log.d("abcd",
@@ -230,7 +242,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             FileOutputStream fos = new FileOutputStream(f);
             fos.write(bytes);
             fos.close();
-            Toast.makeText(MainActivity.this, "File saved as "+mImageName, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "File saved as "+name, Toast.LENGTH_SHORT).show();
 
         }
         catch (Exception e){
@@ -252,9 +264,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         Log.e("abcd","frfdf");
         // Create a media file name
-        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        //String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
         File mediaFile;
-         mImageName="MI_"+ timeStamp +".jpg";
+         //mImageName="MI_"+ timeStamp +".jpg";
         //mImageName="output.jpg";
         mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
         Log.e("abc",mediaFile.getAbsolutePath());

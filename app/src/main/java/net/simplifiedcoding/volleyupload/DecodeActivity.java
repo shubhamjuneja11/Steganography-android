@@ -45,9 +45,8 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
 
     private String KEY_IMAGE = "image";
     private String KEY_NAME = "name";
-    String IMAGE_TYPE="type";
     String PASSWORD="password";
-    String imgtype;
+    String name;
     public String getStringImage(Bitmap bmp){
 
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -98,7 +97,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
 
                 //Adding parameters
                 params.put(KEY_IMAGE, image);
-                params.put(IMAGE_TYPE,imgtype);
+                params.put(KEY_NAME,name);
                 params.put(PASSWORD,password);
                 //params.put(KEY_NAME, name);
 
@@ -145,7 +144,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
                 //Getting the Bitmap from Gallery
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
                 imageView.setImageBitmap(bitmap);
-                imgtype=queryName(filePath);
+                name=queryName(filePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -169,7 +168,7 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
         String s=returnCursor.getString(nameIndex);
         returnCursor.close();
         try {
-            s = s.split("\\.")[1];
+            s = s.split("\\.")[0];
 
         }
         catch (Exception e){
@@ -188,4 +187,5 @@ public class DecodeActivity extends AppCompatActivity implements View.OnClickLis
             decodemessage();
         }
     }
+
 }
